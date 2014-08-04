@@ -1,0 +1,11 @@
+author: coldguy101
+description: Hub Heads Up Display System!
+main: me.coldguy101.HubHUD.HubHUD
+name: HubHUD
+softdepend: [EchoPet, BanManager]
+version: '1.0 BETA'
+
+commands:
+    setRuleBook:
+        description: Sets the rule book.
+        usage: /<command>
