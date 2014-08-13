@@ -1,4 +1,4 @@
-package me.coldguy101.HubHUD.listeners;
+package me.coldguy101.HubHUD.menus;
 
 import me.coldguy101.HubHUD.util.BungeeUtil;
 import me.coldguy101.HubHUD.util.ChatUtil;
@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * Created by Sean on 8/3/2014.
  */
-public class PlayerOpenHubSelector implements Listener
+public class HubSelectorMenu implements Listener
 {
 	Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Hub " + ChatColor.GRAY + "Selector");
 

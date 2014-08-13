@@ -1,7 +1,7 @@
 package me.coldguy101.HubHUD.listeners;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -15,11 +15,12 @@ public class EntityDamageByEntity implements Listener
 	@EventHandler
 	public void entityDamageEntity(EntityDamageByEntityEvent event)
 	{
-		if (event.getDamager() instanceof Fireball)
+		if (event.getDamager() instanceof Snowball)
 		{
+			event.setCancelled(true);
 			Entity damaged = event.getEntity();
-			event.setDamage(0);
-			damaged.setVelocity(new Vector(0, 2, 0));
+			damaged.setVelocity(new Vector(0, .5, 0));
+			damaged.setFallDistance(0);
 		}
 	}
 }

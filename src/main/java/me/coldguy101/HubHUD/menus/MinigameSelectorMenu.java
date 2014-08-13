@@ -1,4 +1,4 @@
-package me.coldguy101.HubHUD.listeners;
+package me.coldguy101.HubHUD.menus;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,12 +9,12 @@ import org.bukkit.inventory.Inventory;
 /**
  * Created by Sean on 7/31/2014.
  */
-public class PlayerOpenMinigameSelector implements Listener
+public class MinigameSelectorMenu implements Listener
 {
 	private final Configuration config;
 	Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Player " + ChatColor.GRAY + "Spectate");
 
-	public PlayerOpenMinigameSelector(Configuration cfg)
+	public MinigameSelectorMenu(Configuration cfg)
 	{
 		config = cfg;
 	}

@@ -20,11 +20,11 @@ import java.util.Arrays;
 /**
  * Created by Sean on 7/31/2014.
  */
-public class PlayerJoinListener implements Listener
+public class PlayerJoin implements Listener
 {
 	private final HubHUD main;
 
-	public PlayerJoinListener(HubHUD m)
+	public PlayerJoin(HubHUD m)
 	{
 		main = m;
 	}
@@ -37,8 +37,8 @@ public class PlayerJoinListener implements Listener
 		{
 			if (p.hasPermission(Util.premium))
 			{
-				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 5));
-				p.setWalkSpeed((long) .5);
+				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
+				p.setWalkSpeed((long) .45);
 			}
 			else
 				for (PotionEffect effect : p.getActivePotionEffects())
@@ -84,8 +84,9 @@ public class PlayerJoinListener implements Listener
 		}
 		else
 		{
-			jumpBoostToggleMeta.setDisplayName(Util.subColorCodes("&0|&a[Donor-Only] Jump Toggle [OFF]&0|"));
-			jumpBoostToggleMeta.setLore(Arrays.asList(ChatColor.DARK_RED + "You Must Be A Donator", ChatColor.DARK_RED + "To Use This Feature!", ChatColor.GREEN + "Donate At: PvPitUP.com/Store!"));
+			jumpBoostToggleMeta.setDisplayName(Util.subColorCodes("&0|&4[Donor-Only] Jump Toggle [OFF]&0|"));
+			jumpBoostToggleMeta.setLore(Arrays.asList(ChatColor.DARK_RED + "You Must Be A Donator",
+					ChatColor.DARK_RED + "To Use This Feature!", ChatColor.GREEN + "Donate At: PvPitUP.com/Store!"));
 			jumpBoostToggle.addUnsafeEnchantment(Enchantment.LUCK, 1);
 		}
 		jumpBoostToggle.setItemMeta(jumpBoostToggleMeta);
@@ -101,7 +102,7 @@ public class PlayerJoinListener implements Listener
 		}
 		else
 		{
-			petSelectorMeta.setDisplayName(Util.subColorCodes("&0|&a[Donor-Only] Pet Selector!&0|"));
+			petSelectorMeta.setDisplayName(Util.subColorCodes("&0|&4[Donor-Only] Pet Selector!&0|"));
 			petSelectorMeta.setLore(Arrays.asList(ChatColor.DARK_RED + "You Must Be A Donator", ChatColor.DARK_RED + "To Use This Feature!", ChatColor.GREEN + "Donate At: PvPitUP.com/Store!"));
 			petSelector.addUnsafeEnchantment(Enchantment.LUCK, 1);
 		}
@@ -118,7 +119,7 @@ public class PlayerJoinListener implements Listener
 		}
 		else
 		{
-			hatSelectorMeta.setDisplayName(Util.subColorCodes("&0|&a[Donor-Only] Hat Selector&0|"));
+			hatSelectorMeta.setDisplayName(Util.subColorCodes("&0|&4[Donor-Only] Hat Selector&0|"));
 			hatSelectorMeta.setLore(Arrays.asList(ChatColor.DARK_RED + "You Must Be A Donator", ChatColor.DARK_RED + "To Use This Feature!", ChatColor.GREEN + "Donate At: PvPitUP.com/Store!"));
 			hatSelector.addUnsafeEnchantment(Enchantment.LUCK, 1);
 		}
@@ -130,7 +131,7 @@ public class PlayerJoinListener implements Listener
 
 		ItemStack minigameSelector = new ItemStack(Material.COMPASS); //minigame selector
 		ItemMeta minigameSMeta = minigameSelector.getItemMeta();
-		minigameSMeta.setDisplayName(Util.subColorCodes("%0|&aMiniGame &bSelector!&0|"));
+		minigameSMeta.setDisplayName(Util.subColorCodes("&0|&aMiniGame &bSelector!&0|"));
 		minigameSMeta.setLore(Arrays.asList(ChatColor.AQUA + "Right Click While Holding", ChatColor.AQUA + "Me In Your Hand To", ChatColor.AQUA + "Select a MiniGame!"));
 		minigameSelector.setItemMeta(minigameSMeta);
 		minigameSelector.addUnsafeEnchantment(Enchantment.LUCK, 1);

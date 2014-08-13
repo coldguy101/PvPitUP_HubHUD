@@ -25,9 +25,9 @@ public class BookSerializer
 			String title = bMeta.getTitle();
 			String author = bMeta.getAuthor();
 			List<String> pages = bMeta.getPages();
-			str += title + "##" + author;
+			str += title + "##" + author + "##";
 			for(String s : pages)
-				str += "@@" + s;
+				str += s + "@@";
 		}
 		return str;
 	}

@@ -46,6 +46,6 @@ public class AdminCommands implements CommandExecutor
 				player.sendMessage(ChatColor.RED + "That item must be a book.");
 			}
 		}
-		return false;
+		return true;
 	}
 }
