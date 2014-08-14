@@ -6,8 +6,8 @@ import me.coldguy101.HubHUD.listeners.EntityDamageByEntity;
 import me.coldguy101.HubHUD.listeners.PlayerDrop;
 import me.coldguy101.HubHUD.listeners.PlayerInteract;
 import me.coldguy101.HubHUD.listeners.PlayerJoin;
+import me.coldguy101.HubHUD.menus.HatSelectorMenu;
 import me.coldguy101.HubHUD.menus.HubSelectorMenu;
-import me.coldguy101.HubHUD.menus.MinigameSelectorMenu;
 import me.coldguy101.HubHUD.menus.PlayerSettingsMenu;
 import me.coldguy101.HubHUD.settings.SettingsManager;
 import me.coldguy101.HubHUD.util.BungeeUtil;
@@ -39,9 +39,10 @@ public class HubHUD extends JavaPlugin implements PluginMessageListener
 		getServer().getPluginManager().registerEvents(new PlayerDrop(), this);
 
 		//menus
-		getServer().getPluginManager().registerEvents(new MinigameSelectorMenu(this), this);
-		getServer().getPluginManager().registerEvents(new HubSelectorMenu(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerSettingsMenu(this), this);
+		//getServer().getPluginManager().registerEvents(new MinigameSelectorMenu(), this);
+		getServer().getPluginManager().registerEvents(new HubSelectorMenu(), this);
+		getServer().getPluginManager().registerEvents(new HatSelectorMenu(), this);
+		getServer().getPluginManager().registerEvents(new PlayerSettingsMenu(settingsManager), this);
 
 		getCommand("setRuleBook").setExecutor(new AdminCommands(this));
 	}

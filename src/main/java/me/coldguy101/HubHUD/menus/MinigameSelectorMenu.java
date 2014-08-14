@@ -1,25 +1,19 @@
 package me.coldguy101.HubHUD.menus;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
 
 /**
  * Created by Sean on 7/31/2014.
  */
 public class MinigameSelectorMenu implements Listener
 {
-	private final Configuration config;
-	Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Player " + ChatColor.GRAY + "Spectate");
+	//private final HubHUD main;
+	//Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Player " + ChatColor.GRAY + "Spectate");
 
-	public MinigameSelectorMenu(Configuration cfg)
+	/*public MinigameSelectorMenu(HubHUD hubHUD)
 	{
-		config = cfg;
-	}
-
-
+		main = hubHUD;
+	}*/
 //
 //	@EventHandler
 //	public void onPlayerRightClick(PlayerInteractEvent evt)

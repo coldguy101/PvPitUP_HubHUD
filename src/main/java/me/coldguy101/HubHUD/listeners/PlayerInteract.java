@@ -1,6 +1,9 @@
 package me.coldguy101.HubHUD.listeners;
 
 import me.coldguy101.HubHUD.HubHUD;
+import me.coldguy101.HubHUD.menus.HatSelectorMenu;
+import me.coldguy101.HubHUD.menus.HubSelectorMenu;
+import me.coldguy101.HubHUD.menus.PlayerSettingsMenu;
 import me.coldguy101.HubHUD.util.ChatUtil;
 import me.coldguy101.HubHUD.util.Util;
 import org.bukkit.ChatColor;
@@ -32,7 +35,7 @@ public class PlayerInteract implements Listener
 	public void onPlayerInteract(PlayerInteractEvent event)
 	{
 		ItemStack heald = event.getPlayer().getItemInHand();
-		if(heald.getType() == Material.WRITTEN_BOOK)
+		if (heald.getType() == Material.WRITTEN_BOOK)
 			return;
 		String dName = heald.getItemMeta().getDisplayName().toLowerCase();
 
@@ -42,7 +45,8 @@ public class PlayerInteract implements Listener
 			if (dName.contains("shoot"))
 			{
 				player.launchProjectile(Snowball.class);
-			} else if (dName.contains("pet"))
+			}
+			else if (dName.contains("pet"))
 			{
 				if (player.hasPermission(Util.premium) || player.hasPermission(Util.platinum))
 				{
@@ -53,19 +57,23 @@ public class PlayerInteract implements Listener
 				}
 				else
 				{
-					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " + ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
+					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " +
+							ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
 				}
-			} else if (dName.contains("hat"))
+			}
+			else if (dName.contains("hat"))
 			{
 				if (player.hasPermission(Util.premium) || player.hasPermission(Util.platinum))
 				{
-					//do something
+					HatSelectorMenu.playerOpenMenu(player);
 				}
 				else
 				{
-					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " + ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
+					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " +
+							ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
 				}
-			} else if (dName.contains("jump"))
+			}
+			else if (dName.contains("jump"))
 			{
 				if (player.hasPermission(Util.premium) || player.hasPermission(Util.platinum))
 				{
@@ -74,18 +82,23 @@ public class PlayerInteract implements Listener
 						for (PotionEffect effect : player.getActivePotionEffects())
 							player.removePotionEffect(effect.getType());
 						player.setWalkSpeed((float) 0.2);
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&4Jump Toggle [OFF]&0|"));
+						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&4Jump Toggle " +
+								"[OFF]&0|"));
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.GREEN + "Hub Boosts Disabled!");
-					} else
+					}
+					else
 					{
 						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
 						player.setWalkSpeed((long) 0.45);
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&aJump Toggle [ON]&0|"));
+						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&aJump Toggle " +
+								"[ON]&0|"));
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "Hub Boosts Enabled!");
 					}
-				} else
+				}
+				else
 				{
-					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " + ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
+					player.sendMessage(ChatUtil.pvpitup + ChatColor.GOLD + "This is a Donor-Only Feature! " +
+							ChatColor.BLUE + "Go to PvPitUP.com/Store to Donate!");
 				}
 			}
 			//} else if (dName.contains("minigame"))
@@ -94,11 +107,13 @@ public class PlayerInteract implements Listener
 			//}
 			else if (dName.contains("hub"))
 			{
-				player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "This feature is coming soon!");
+				HubSelectorMenu.playerOpenMenu(player);
+				//player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "This feature is coming soon!");
 			}
 			else if (dName.contains("settings"))
 			{
-				player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "This feature is coming soon!");
+				PlayerSettingsMenu.playerOpenSettingsMenu(player);
+				//player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "This feature is coming soon!");
 			}
 		}
 	}
@@ -106,17 +121,19 @@ public class PlayerInteract implements Listener
 	@EventHandler
 	public void onEntityClick(PlayerInteractEntityEvent event)
 	{
-		if(event.getRightClicked() instanceof Player)
+		if (event.getRightClicked() instanceof Player)
 		{
 			Player clicker = event.getPlayer();
 			Player clicked = (Player) event.getRightClicked();
 			ItemStack heald = clicker.getItemInHand();
 			String dName = heald.getItemMeta().getDisplayName().toLowerCase();
 
-			if(dName.contains("slap"))
+			if (dName.contains("slap"))
 			{
-				clicked.sendMessage(ChatUtil.pvpitup + clicker.getDisplayName() + ChatColor.GOLD + " Slapped you!" + ChatColor.GRAY + " (If you wish, use settings to turn off slap)");
-				clicker.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_GREEN + "You just slapped " + clicked.getDisplayName() + "!");
+				clicked.sendMessage(ChatUtil.pvpitup + clicker.getDisplayName() + ChatColor.GOLD + " Slapped you!" +
+						ChatColor.GRAY + " (If you wish, use settings to turn off slap)");
+				clicker.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_GREEN + "You just slapped " + clicked
+						.getDisplayName() + "!");
 				Location location = clicked.getLocation();
 				location.setPitch(location.getPitch() + 180);
 				location.setYaw(location.getYaw() + 180);

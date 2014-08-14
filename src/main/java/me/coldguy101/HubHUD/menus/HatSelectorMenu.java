@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,11 +14,11 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Sean on 8/4/2014.
  */
-public class HatSelectorMenu
+public class HatSelectorMenu implements Listener
 {
-	Inventory hatSelector = Bukkit.createInventory(null, 18, ChatColor.AQUA + "Hat " + ChatColor.GRAY + "Selector");
+	static Inventory hatSelector = Bukkit.createInventory(null, 18, ChatColor.AQUA + "Hat " + ChatColor.GRAY + "Selector");
 
-	public void playerOpenMenu(Player p)
+	public static void playerOpenMenu(Player p)
 	{
 		hatSelector.clear();
 

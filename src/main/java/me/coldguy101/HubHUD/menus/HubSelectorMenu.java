@@ -16,9 +16,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class HubSelectorMenu implements Listener
 {
-	Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Hub " + ChatColor.GRAY + "Selector");
+	static Inventory gameSelector = Bukkit.createInventory(null, 27, ChatColor.GREEN + "Hub " + ChatColor.GRAY + "Selector");
 
-	public void playerOpenMenu(Player p)
+	public static void playerOpenMenu(Player p)
 	{
 		gameSelector.clear();
 
