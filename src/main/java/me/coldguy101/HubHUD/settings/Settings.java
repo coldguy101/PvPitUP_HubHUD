@@ -7,6 +7,7 @@ public class Settings
 {
 	boolean enableSlap = true;
 	boolean enableBlaster = true;
+	boolean playersHidden = false;
 
 	public boolean isSlapEnabled()
 	{
@@ -26,5 +27,15 @@ public class Settings
 	public void toggleBlaster()
 	{
 		enableBlaster = !enableBlaster;
+	}
+
+	public boolean isPlayersHidden()
+	{
+		return playersHidden;
+	}
+
+	public void toggleHidePlayers()
+	{
+		playersHidden = !playersHidden;
 	}
 }

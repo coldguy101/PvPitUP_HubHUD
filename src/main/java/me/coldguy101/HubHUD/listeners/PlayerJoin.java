@@ -2,6 +2,7 @@ package me.coldguy101.HubHUD.listeners;
 
 import me.coldguy101.HubHUD.HubHUD;
 import me.coldguy101.HubHUD.util.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -51,6 +52,14 @@ public class PlayerJoin implements Listener
 		}
 		p.getInventory().clear();
 		setItems(p);
+
+		for(Player pl : Bukkit.getOnlinePlayers())
+		{
+			if(main.settingsManager.getSettings(pl).isPlayersHidden())
+				pl.hidePlayer(p);
+			else
+				pl.showPlayer(p);
+		}
 	}
 
 	public void setItems(Player p)

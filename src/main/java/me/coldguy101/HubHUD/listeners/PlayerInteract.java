@@ -44,7 +44,10 @@ public class PlayerInteract implements Listener
 			Player player = event.getPlayer();
 			if (dName.contains("shoot"))
 			{
-				player.launchProjectile(Snowball.class);
+				if(main.settingsManager.getSettings(player).isBlasterEnabled())
+					player.launchProjectile(Snowball.class);
+				else
+					player.sendMessage(ChatUtil.pvpitup + ChatColor.RED + "You Have the Blaster Disabled! Change This in Settings!");
 			}
 			else if (dName.contains("pet"))
 			{
@@ -130,6 +133,17 @@ public class PlayerInteract implements Listener
 
 			if (dName.contains("slap"))
 			{
+				if(!main.settingsManager.getSettings(clicker).isSlapEnabled())
+				{
+					clicker.sendMessage(ChatUtil.pvpitup + ChatColor.RED + "You Have Slapping Disabled! Change This In The Settings!");
+					return;
+				}
+				if(!main.settingsManager.getSettings(clicked).isSlapEnabled())
+				{
+					clicker.sendMessage(ChatUtil.pvpitup + ChatColor.RED + "The Person You Are Attempting to Slap Has Slapping Disabled!");
+					return;
+				}
+
 				clicked.sendMessage(ChatUtil.pvpitup + clicker.getDisplayName() + ChatColor.GOLD + " Slapped you!" +
 						ChatColor.GRAY + " (If you wish, use settings to turn off slap)");
 				clicker.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_GREEN + "You just slapped " + clicked

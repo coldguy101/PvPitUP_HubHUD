@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
@@ -28,6 +27,8 @@ public class PlayerSettingsMenu implements Listener
 	static ItemStack disable_fish = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cFishSlap Disabled", Arrays.asList("&cNo Fish-Slapping","&cFor You \u2639\u2639","&7PS: Others Can't Slap You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
 	static ItemStack enable_blaster = Util.nameAndLore(new ItemStack(Material.EMERALD_BLOCK), "&aBlaster Enabled", Arrays.asList("&aYou Can Now Blast","&aYour Friends With the","&aBlazeRod in Your Inventory!", "&7PS: They Can Blast You Back!"));
 	static ItemStack disable_blaster = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cBlaster Disabled", Arrays.asList("&cNo Blasting For","&cYou \u2639\u2639", "&7PS: Others Can't Blast You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
+	static ItemStack players_hidden = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cPlayers Hidden", Arrays.asList("&cPlayers Are Currently Hidden.","&bClick This To Show", "&bAll Players!"));
+	static ItemStack players_unHidden = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&aPlayers Seen", Arrays.asList("&aPlayers Are Currently Seen.","&bClick This To Hide", "&bAll Players!"));
 
 	public PlayerSettingsMenu(SettingsManager sm)
 	{
@@ -45,9 +46,14 @@ public class PlayerSettingsMenu implements Listener
 			settingsMenu.setItem(12, disable_fish);
 
 		if(settings.isBlasterEnabled())
-			settingsMenu.setItem(16, enable_blaster);
+			settingsMenu.setItem(14, enable_blaster);
 		else
-			settingsMenu.setItem(16, disable_blaster);
+			settingsMenu.setItem(14, disable_blaster);
+
+		if(settings.isPlayersHidden())
+			settingsMenu.setItem(16,players_unHidden);
+		else
+			settingsMenu.setItem(16, players_hidden);
 
 		p.openInventory(settingsMenu);
 	}
@@ -57,14 +63,52 @@ public class PlayerSettingsMenu implements Listener
 	{
 		if (evt.getInventory().getName().equals(settingsMenu.getName())) // The inventory is our custom Inventory
 		{
-			SkullMeta sm = (SkullMeta) evt.getCurrentItem().getItemMeta(); //Get the skull meta from the player's click
+			String itemName = evt.getCurrentItem().getItemMeta().getDisplayName().toLowerCase(); //Get the name of the item the player clicks
 			Player player = (Player) evt.getWhoClicked(); // The player that clicked the item
-			Player toPlayer = Bukkit.getPlayer(sm.getOwner());
+			Settings settings = settingsManager.getSettings(player);
 
-			player.teleport(toPlayer);
-			player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Teleporting you to " + toPlayer.getDisplayName());
+			if(itemName.contains("fishslap"))
+			{
+				settings.toggleSlap(); //switch whatever the value was to the opposite
+				if(settings.isSlapEnabled()) //display the correct color block immediately after clicking
+					settingsMenu.setItem(12, enable_fish);
+				else
+					settingsMenu.setItem(12, disable_fish);
+				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Fish Slap is Now: " + (settings.isSlapEnabled() ? ChatColor.GREEN + "Enabled!" : ChatColor.RED + "Disabled!"));
+			}
+			else if(itemName.contains("blaster"))
+			{
+				settings.toggleBlaster();
+				if(settings.isBlasterEnabled())
+					settingsMenu.setItem(14, enable_blaster);
+				else
+					settingsMenu.setItem(14, disable_blaster);
+				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "The Blaster is Now: " + (settings.isBlasterEnabled() ? ChatColor.GREEN + "Enabled!" : ChatColor.RED + "Disabled!"));
+			}
+			else if(itemName.contains("player"))
+			{
+				settings.toggleHidePlayers();
+				if(settings.isPlayersHidden())
+				{
+					settingsMenu.setItem(16, players_unHidden);
+					for(Player p : Bukkit.getOnlinePlayers())
+					{
+						player.hidePlayer(p);
+					}
+				}
+				else
+				{
+					settingsMenu.setItem(16, players_hidden);
+					for(Player p : Bukkit.getOnlinePlayers())
+					{
+						player.showPlayer(p);
+					}
 
-			evt.setCancelled(true); // Make it so the dirt is back in its original spot
+				}
+				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Players Are Now: " + (settings.isPlayersHidden() ? ChatColor.GREEN + "Invisible!" : ChatColor.RED + "Visible!"));
+			}
+
+			evt.setCancelled(true); // Cancel the event
 			player.closeInventory(); // Closes their inventory
 		}
 	}

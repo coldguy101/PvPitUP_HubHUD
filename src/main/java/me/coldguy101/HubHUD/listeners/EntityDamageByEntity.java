@@ -1,6 +1,8 @@
 package me.coldguy101.HubHUD.listeners;
 
+import me.coldguy101.HubHUD.settings.SettingsManager;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +14,13 @@ import org.bukkit.util.Vector;
  */
 public class EntityDamageByEntity implements Listener
 {
+	final SettingsManager settingsManager;
+
+	public EntityDamageByEntity(SettingsManager sm)
+	{
+		settingsManager = sm;
+	}
+
 	@EventHandler
 	public void entityDamageEntity(EntityDamageByEntityEvent event)
 	{
@@ -19,8 +28,13 @@ public class EntityDamageByEntity implements Listener
 		{
 			event.setCancelled(true);
 			Entity damaged = event.getEntity();
-			damaged.setVelocity(new Vector(0, .5, 0));
-			damaged.setFallDistance(0);
+			Player shooter = (Player) event.getDamager();//asdfdsafdsafsadfdsafdfdsa TODO
+
+			if(damaged instanceof Player && settingsManager.getSettings((Player) damaged).isBlasterEnabled())
+			{
+				damaged.setVelocity(new Vector(0, .5, 0));
+				damaged.setFallDistance(0);
+			}
 		}
 	}
 }

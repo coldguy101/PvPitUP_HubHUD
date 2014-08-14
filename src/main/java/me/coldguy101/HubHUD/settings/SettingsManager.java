@@ -11,18 +11,10 @@ public class SettingsManager
 {
 	HashMap<Player, Settings> settingsHashMap = new HashMap<Player, Settings>();
 
-	public void giveDefaultSettings(Player p)
-	{
-		settingsHashMap.put(p, new Settings());
-	}
-
 	public Settings getSettings(Player p)
 	{
+		if(!settingsHashMap.containsKey(p))
+			settingsHashMap.put(p, new Settings());
 		return settingsHashMap.get(p);
-	}
-
-	public void setSettings(Player p, Settings s)
-	{
-		settingsHashMap.put(p, s);
 	}
 }
