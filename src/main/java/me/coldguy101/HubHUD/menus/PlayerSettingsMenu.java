@@ -23,12 +23,12 @@ public class PlayerSettingsMenu implements Listener
 {
 	private static SettingsManager settingsManager;
 	static Inventory settingsMenu = Bukkit.createInventory(null, 27, ChatColor.BOLD + "Settings");
-	static ItemStack enable_fish = Util.nameAndLore(new ItemStack(Material.EMERALD_BLOCK), "&aFishSlap Enabled", Arrays.asList("&aYou Can Now Slap","&aYour Friends With the","&aFish in Your Inventory!", "&7PS: They Can Slap You Back!"));
-	static ItemStack disable_fish = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cFishSlap Disabled", Arrays.asList("&cNo Fish-Slapping","&cFor You \u2639\u2639","&7PS: Others Can't Slap You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
-	static ItemStack enable_blaster = Util.nameAndLore(new ItemStack(Material.EMERALD_BLOCK), "&aBlaster Enabled", Arrays.asList("&aYou Can Now Blast","&aYour Friends With the","&aBlazeRod in Your Inventory!", "&7PS: They Can Blast You Back!"));
-	static ItemStack disable_blaster = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cBlaster Disabled", Arrays.asList("&cNo Blasting For","&cYou \u2639\u2639", "&7PS: Others Can't Blast You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
-	static ItemStack players_hidden = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&cPlayers Hidden", Arrays.asList("&cPlayers Are Currently Hidden.","&bClick This To Show", "&bAll Players!"));
-	static ItemStack players_unHidden = Util.nameAndLore(new ItemStack(Material.REDSTONE_BLOCK), "&aPlayers Seen", Arrays.asList("&aPlayers Are Currently Seen.","&bClick This To Hide", "&bAll Players!"));
+	static ItemStack enable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aFishSlap Enabled", Arrays.asList("&aYou Can Now Slap","&aYour Friends With the","&aFish in Your Inventory!", "&7PS: They Can Slap You Back!"));
+	static ItemStack disable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&cFishSlap Disabled", Arrays.asList("&cNo Fish-Slapping","&cFor You \u2639\u2639","&7PS: Others Can't Slap You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
+	static ItemStack enable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aBlaster Enabled", Arrays.asList("&aYou Can Now Blast","&aYour Friends With the","&aBlazeRod in Your Inventory!", "&7PS: They Can Blast You Back!"));
+	static ItemStack disable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&cBlaster Disabled", Arrays.asList("&cNo Blasting For","&cYou \u2639\u2639", "&7PS: Others Can't Blast You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
+	static ItemStack players_hidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&cPlayers Hidden", Arrays.asList("&cPlayers Are Currently Hidden.","&bClick This To Show", "&bAll Players!"));
+	static ItemStack players_unHidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&aPlayers Seen", Arrays.asList("&aPlayers Are Currently Seen.","&bClick This To Hide", "&bAll Players!"));
 
 	public PlayerSettingsMenu(SettingsManager sm)
 	{
@@ -41,19 +41,19 @@ public class PlayerSettingsMenu implements Listener
 		Settings settings = settingsManager.getSettings(p);
 
 		if(settings.isSlapEnabled())
-			settingsMenu.setItem(12, enable_fish);
+			settingsMenu.setItem(11, enable_fish);
 		else
-			settingsMenu.setItem(12, disable_fish);
+			settingsMenu.setItem(11, disable_fish);
 
 		if(settings.isBlasterEnabled())
-			settingsMenu.setItem(14, enable_blaster);
+			settingsMenu.setItem(13, enable_blaster);
 		else
-			settingsMenu.setItem(14, disable_blaster);
+			settingsMenu.setItem(13, disable_blaster);
 
 		if(settings.isPlayersHidden())
-			settingsMenu.setItem(16,players_unHidden);
+			settingsMenu.setItem(15, players_unHidden);
 		else
-			settingsMenu.setItem(16, players_hidden);
+			settingsMenu.setItem(15, players_hidden);
 
 		p.openInventory(settingsMenu);
 	}
@@ -71,18 +71,18 @@ public class PlayerSettingsMenu implements Listener
 			{
 				settings.toggleSlap(); //switch whatever the value was to the opposite
 				if(settings.isSlapEnabled()) //display the correct color block immediately after clicking
-					settingsMenu.setItem(12, enable_fish);
+					settingsMenu.setItem(10, enable_fish);
 				else
-					settingsMenu.setItem(12, disable_fish);
+					settingsMenu.setItem(10, disable_fish);
 				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Fish Slap is Now: " + (settings.isSlapEnabled() ? ChatColor.GREEN + "Enabled!" : ChatColor.RED + "Disabled!"));
 			}
 			else if(itemName.contains("blaster"))
 			{
 				settings.toggleBlaster();
 				if(settings.isBlasterEnabled())
-					settingsMenu.setItem(14, enable_blaster);
+					settingsMenu.setItem(12, enable_blaster);
 				else
-					settingsMenu.setItem(14, disable_blaster);
+					settingsMenu.setItem(12, disable_blaster);
 				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "The Blaster is Now: " + (settings.isBlasterEnabled() ? ChatColor.GREEN + "Enabled!" : ChatColor.RED + "Disabled!"));
 			}
 			else if(itemName.contains("player"))
@@ -90,7 +90,7 @@ public class PlayerSettingsMenu implements Listener
 				settings.toggleHidePlayers();
 				if(settings.isPlayersHidden())
 				{
-					settingsMenu.setItem(16, players_unHidden);
+					settingsMenu.setItem(14, players_unHidden);
 					for(Player p : Bukkit.getOnlinePlayers())
 					{
 						player.hidePlayer(p);
@@ -98,7 +98,7 @@ public class PlayerSettingsMenu implements Listener
 				}
 				else
 				{
-					settingsMenu.setItem(16, players_hidden);
+					settingsMenu.setItem(14, players_hidden);
 					for(Player p : Bukkit.getOnlinePlayers())
 					{
 						player.showPlayer(p);

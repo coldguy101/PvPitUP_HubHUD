@@ -8,4 +8,17 @@ version: '1.0 BETA'
 commands:
     setRuleBook:
         description: Sets the rule book.
+        permission: hubhud.setrulebook
         usage: /<command>
+    ignoreme:
+        description: Makes the plugin ignore the player who issues the command.
+        permission: hubhud.ignoreme
+        usage: /<command>
+    setparticletext:
+        description: Adds the text particles of the given text and the given size to the game.
+        permission: hubhud.setparticles
+        usage: /<command> <string> <size>
+    testBungeeNumPlayers:
+        description: test command
+        permission: test
+        usage /<command> <serverName>

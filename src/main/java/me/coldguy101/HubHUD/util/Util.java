@@ -28,6 +28,14 @@ public class Util
 		return list;
 	}
 
+	public static ItemStack nameItem(ItemStack is, String name)
+	{
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(subColorCodes(name));
+		is.setItemMeta(im);
+		return is;
+	}
+
 	public static ItemStack nameAndLore(ItemStack is, String name, List<String> lore)
 	{
 		ItemMeta im = is.getItemMeta();

@@ -35,6 +35,22 @@ public final class BungeeUtil
 		p.sendPluginMessage(instance, "BungeeCord", b.toByteArray());
 	}
 
+	public static void getNumPlayers(Player p, String serverName) //need to test....
+	{
+		ByteArrayOutputStream b = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(b);
+		try
+		{
+			out.writeUTF("PlayerCount");
+			out.writeUTF(serverName.trim());
+		}
+		catch (IOException ex)
+		{
+			// Impossibru
+		}
+		p.sendPluginMessage(instance, "BungeeCord", b.toByteArray());
+	}
+
 	public static boolean sendBungeeMessage(Plugin plugin, String server, BungeeMessage msg)
 	{
 		ByteArrayOutputStream outBytes = new ByteArrayOutputStream();

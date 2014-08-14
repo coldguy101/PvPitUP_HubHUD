@@ -80,21 +80,18 @@ public class PlayerInteract implements Listener
 			{
 				if (player.hasPermission(Util.premium) || player.hasPermission(Util.platinum))
 				{
-					if (player.getActivePotionEffects().size() > 0)
+					if (player.getItemInHand().getItemMeta().getDisplayName().contains("ON"))
 					{
 						for (PotionEffect effect : player.getActivePotionEffects())
 							player.removePotionEffect(effect.getType());
-						player.setWalkSpeed((float) 0.2);
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&4Jump Toggle " +
-								"[OFF]&0|"));
+						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&4Jump Toggle " + "[OFF]&0|"));
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.GREEN + "Hub Boosts Disabled!");
 					}
 					else
 					{
 						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
-						player.setWalkSpeed((long) 0.45);
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&aJump Toggle " +
-								"[ON]&0|"));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 2));
+						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&aJump Toggle " + "[ON]&0|"));
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "Hub Boosts Enabled!");
 					}
 				}

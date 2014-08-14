@@ -1,6 +1,8 @@
 package me.coldguy101.HubHUD.listeners;
 
 import me.coldguy101.HubHUD.settings.SettingsManager;
+import me.coldguy101.HubHUD.util.ChatUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -28,13 +30,21 @@ public class EntityDamageByEntity implements Listener
 		{
 			event.setCancelled(true);
 			Entity damaged = event.getEntity();
-			Player shooter = (Player) event.getDamager();//asdfdsafdsafsadfdsafdfdsa TODO
-
-			if(damaged instanceof Player && settingsManager.getSettings((Player) damaged).isBlasterEnabled())
+			Player shooter = (Player) ((Snowball) event.getDamager()).getShooter();
+			if(damaged instanceof Player)
 			{
-				damaged.setVelocity(new Vector(0, .5, 0));
-				damaged.setFallDistance(0);
+				if (settingsManager.getSettings((Player) damaged).isBlasterEnabled())
+				{
+					shooter.sendMessage(ChatUtil.pvpitup + ChatColor.AQUA + "You Blasted " + ((Player) damaged).getDisplayName() + "!");
+
+					damaged.setVelocity(new Vector(0, .5, 0));
+					damaged.setFallDistance(0);
+				}
+				else
+					shooter.sendMessage(ChatUtil.pvpitup + ((Player) damaged).getDisplayName() + ChatColor.RED + " Has Blasting Disabled! Try Blasting Someone Else!");
 			}
+			else
+				shooter.sendMessage(ChatUtil.pvpitup + ChatColor.RED + "Your Target Must Be a Player!");
 		}
 	}
 }
