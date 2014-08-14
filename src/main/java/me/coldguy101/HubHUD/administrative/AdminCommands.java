@@ -55,7 +55,8 @@ public class AdminCommands implements CommandExecutor
 				return false;
 			TextLocationEffect effect = new TextLocationEffect(main.effectManager, player.getLocation());
 			//effect.text = args[0];
-			String text = "";
+			String text = "Welcome To PvPitUP!";
+			/*long size = 0.2;
 			if(args[0].contains("\""))
 				for(int x = 0; x < args.length; x++)
 				{
@@ -67,7 +68,7 @@ public class AdminCommands implements CommandExecutor
 						break;
 				}
 			effect.text = text;
-			effect.size = Float.parseFloat(args[1]);
+			effect.size = Float.parseFloat(args[1]); */
 			effect.infinite();
 			effect.start();
 			player.sendMessage("created");

@@ -21,4 +21,4 @@ commands:
     testBungeeNumPlayers:
         description: test command
         permission: test
-        usage /<command> <serverName>
+        usage: /<command> <serverName>

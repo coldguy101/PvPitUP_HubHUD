@@ -45,8 +45,10 @@ public class HubHUD extends JavaPlugin implements PluginMessageListener
 		getServer().getPluginManager().registerEvents(new EntityDamageByEntity(settingsManager), this);
 		getServer().getPluginManager().registerEvents(new InventoryInteract(), this);
 		getServer().getPluginManager().registerEvents(new PlayerBuild(), this);
+		getServer().getPluginManager().registerEvents(new PlayerConsume(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDrop(), this);
+		getServer().getPluginManager().registerEvents(new PlayerHungerChange(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteract(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerRespawn(this), this);

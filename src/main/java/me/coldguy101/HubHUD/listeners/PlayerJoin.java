@@ -31,7 +31,8 @@ public class PlayerJoin implements Listener
 			if (p.hasPermission(Util.premium))
 			{
 				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
-				p.setWalkSpeed((long) .45);
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 2));
+				//p.setWalkSpeed((long) .45);
 			}
 			else
 				for (PotionEffect effect : p.getActivePotionEffects())
@@ -39,7 +40,7 @@ public class PlayerJoin implements Listener
 			if (p.hasPermission(Util.platinum))
 			{
 				p.setAllowFlight(true);
-				p.setFlySpeed((long) .5);
+				//p.setFlySpeed((long) .5);
 			}
 		}
 		p.getInventory().clear();

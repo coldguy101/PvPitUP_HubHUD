@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -80,18 +81,22 @@ public class PlayerInteract implements Listener
 			{
 				if (player.hasPermission(Util.premium) || player.hasPermission(Util.platinum))
 				{
-					if (player.getItemInHand().getItemMeta().getDisplayName().contains("ON"))
+					if (player.getActivePotionEffects().size() > 0)
 					{
 						for (PotionEffect effect : player.getActivePotionEffects())
 							player.removePotionEffect(effect.getType());
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&4Jump Toggle " + "[OFF]&0|"));
+						ItemMeta im = player.getItemInHand().getItemMeta();
+						im.setDisplayName(Util.subColorCodes("&0|&4Jump Toggle " + "[OFF]&0|"));
+						player.getItemInHand().setItemMeta(im);
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.GREEN + "Hub Boosts Disabled!");
 					}
 					else
 					{
 						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
 						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 2));
-						player.getItemInHand().getItemMeta().setDisplayName(Util.subColorCodes("&0|&aJump Toggle " + "[ON]&0|"));
+						ItemMeta im = player.getItemInHand().getItemMeta();
+						im.setDisplayName(Util.subColorCodes("&0|&aJump Toggle " + "[ON]&0|"));
+						player.getItemInHand().setItemMeta(im);
 						player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "Hub Boosts Enabled!");
 					}
 				}
