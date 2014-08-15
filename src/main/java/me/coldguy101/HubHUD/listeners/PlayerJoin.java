@@ -26,12 +26,13 @@ public class PlayerJoin implements Listener
 	public void onJoin(PlayerJoinEvent event)
 	{
 		Player p = event.getPlayer();
+
 		if(p.hasPermission(Util.premium) || p.hasPermission(Util.platinum))
 		{
 			if (p.hasPermission(Util.premium))
 			{
-				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 2));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 5));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 5));
 				//p.setWalkSpeed((long) .45);
 			}
 			else
@@ -43,8 +44,12 @@ public class PlayerJoin implements Listener
 				//p.setFlySpeed((long) .5);
 			}
 		}
-		p.getInventory().clear();
-		main.inventoryManager.giveFullInventory(p);
+
+		if(!main.settingsManager.getSettings(p).isInventoryHidden())
+		{
+			p.getInventory().clear();
+			main.inventoryManager.giveFullInventory(p);
+		}
 
 		for(Player pl : Bukkit.getOnlinePlayers())
 		{

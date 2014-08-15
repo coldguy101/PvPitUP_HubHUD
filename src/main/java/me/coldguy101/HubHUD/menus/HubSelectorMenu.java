@@ -34,7 +34,7 @@ public class HubSelectorMenu implements Listener
 		hubSelector.setItem(14, Util.nameItem(new ItemStack(Material.WORKBENCH, 1),"&aHungerGames Hub &c3"));
 		hubSelector.setItem(16, Util.nameItem(new ItemStack(Material.WORKBENCH, 1),"&aHungerGames Hub &c4"));
 
-		hubSelector.setItem(22, Util.nameItem(new ItemStack(Material.WORKBENCH, 1),"&cKingOfTheHill Hub &41"));
+		hubSelector.setItem(22, Util.nameItem(new ItemStack(Material.GRASS, 1),"&3KingOfTheHill Hub &41"));
 
 		p.openInventory(hubSelector);
 	}

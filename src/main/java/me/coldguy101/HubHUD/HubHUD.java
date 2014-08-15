@@ -57,7 +57,7 @@ public class HubHUD extends JavaPlugin implements PluginMessageListener
 		//getServer().getPluginManager().registerEvents(new MinigameSelectorMenu(), this);
 		getServer().getPluginManager().registerEvents(new HubSelectorMenu(), this);
 		getServer().getPluginManager().registerEvents(new HatSelectorMenu(), this);
-		getServer().getPluginManager().registerEvents(new PlayerSettingsMenu(settingsManager), this);
+		getServer().getPluginManager().registerEvents(new PlayerSettingsMenu(this), this);
 
 		getCommand("setRuleBook").setExecutor(new AdminCommands(this));
 		getCommand("setparticletext").setExecutor(new AdminCommands(this));
@@ -74,6 +74,6 @@ public class HubHUD extends JavaPlugin implements PluginMessageListener
 	@Override
 	public void onPluginMessageReceived(String channel, Player player, byte[] message)
 	{
-		getLogger().info("Got Plugin Message on " + channel + " from " + player.getName() + " messge was: " + message.toString());
+		//getLogger().info("Got Plugin Message on " + channel + " from " + player.getName() + " messge was: " + message.toString());
 	}
 }

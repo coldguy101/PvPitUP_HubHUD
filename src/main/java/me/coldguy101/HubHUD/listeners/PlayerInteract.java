@@ -6,6 +6,7 @@ import me.coldguy101.HubHUD.menus.HubSelectorMenu;
 import me.coldguy101.HubHUD.menus.PlayerSettingsMenu;
 import me.coldguy101.HubHUD.util.ChatUtil;
 import me.coldguy101.HubHUD.util.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,12 +21,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashSet;
+
 /**
  * Created by Sean on 8/3/2014.
  */
 public class PlayerInteract implements Listener
 {
 	private final HubHUD main;
+	private HashSet<Player> coolingDown = new HashSet<Player>();
 
 	public PlayerInteract(HubHUD m)
 	{
@@ -36,13 +40,17 @@ public class PlayerInteract implements Listener
 	public void onPlayerInteract(PlayerInteractEvent event)
 	{
 		ItemStack heald = event.getPlayer().getItemInHand();
-		if (heald.getType() == Material.WRITTEN_BOOK)
+
+		if (heald.getType() == Material.AIR || heald.getType() == Material.WRITTEN_BOOK)
 			return;
 		String dName = heald.getItemMeta().getDisplayName().toLowerCase();
 
 		if (dName.contains("|"))
 		{
-			Player player = event.getPlayer();
+			if(coolingDown.contains(event.getPlayer()))
+				return;
+
+			final Player player = event.getPlayer();
 			if (dName.contains("shoot"))
 			{
 				if(main.settingsManager.getSettings(player).isBlasterEnabled())
@@ -92,8 +100,8 @@ public class PlayerInteract implements Listener
 					}
 					else
 					{
-						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 2));
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 2));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, 5));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 5));
 						ItemMeta im = player.getItemInHand().getItemMeta();
 						im.setDisplayName(Util.subColorCodes("&0|&aJump Toggle " + "[ON]&0|"));
 						player.getItemInHand().setItemMeta(im);
@@ -120,6 +128,20 @@ public class PlayerInteract implements Listener
 				PlayerSettingsMenu.playerOpenSettingsMenu(player);
 				//player.sendMessage(ChatUtil.pvpitup + ChatColor.DARK_BLUE + "This feature is coming soon!");
 			}
+			else if (dName.contains("show")) //Show inventory items after they are hidden (in settings)
+			{
+				main.inventoryManager.giveFullInventory(player);
+				main.settingsManager.getSettings(player).toggleInventoryHidden();
+			}
+			coolingDown.add(player);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					coolingDown.remove(player);
+				}
+			}, 20L);
 		}
 	}
 
@@ -135,6 +157,8 @@ public class PlayerInteract implements Listener
 
 			if (dName.contains("slap"))
 			{
+				if(coolingDown.contains(clicker))
+					return;
 				if(!main.settingsManager.getSettings(clicker).isSlapEnabled())
 				{
 					clicker.sendMessage(ChatUtil.pvpitup + ChatColor.RED + "You Have Slapping Disabled! Change This In The Settings!");

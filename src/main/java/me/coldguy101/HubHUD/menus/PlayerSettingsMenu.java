@@ -1,5 +1,6 @@
 package me.coldguy101.HubHUD.menus;
 
+import me.coldguy101.HubHUD.HubHUD;
 import me.coldguy101.HubHUD.settings.Settings;
 import me.coldguy101.HubHUD.settings.SettingsManager;
 import me.coldguy101.HubHUD.util.ChatUtil;
@@ -21,18 +22,22 @@ import java.util.Arrays;
  */
 public class PlayerSettingsMenu implements Listener
 {
+	private static HubHUD main;
 	private static SettingsManager settingsManager;
 	static Inventory settingsMenu = Bukkit.createInventory(null, 27, ChatColor.BOLD + "Settings");
-	static ItemStack enable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aFishSlap Enabled", Arrays.asList("&aYou Can Now Slap","&aYour Friends With the","&aFish in Your Inventory!", "&7PS: They Can Slap You Back!"));
-	static ItemStack disable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&cFishSlap Disabled", Arrays.asList("&cNo Fish-Slapping","&cFor You \u2639\u2639","&7PS: Others Can't Slap You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
-	static ItemStack enable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aBlaster Enabled", Arrays.asList("&aYou Can Now Blast","&aYour Friends With the","&aBlazeRod in Your Inventory!", "&7PS: They Can Blast You Back!"));
-	static ItemStack disable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&cBlaster Disabled", Arrays.asList("&cNo Blasting For","&cYou \u2639\u2639", "&7PS: Others Can't Blast You! (Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
-	static ItemStack players_hidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&cPlayers Hidden", Arrays.asList("&cPlayers Are Currently Hidden.","&bClick This To Show", "&bAll Players!"));
-	static ItemStack players_unHidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&aPlayers Seen", Arrays.asList("&aPlayers Are Currently Seen.","&bClick This To Hide", "&bAll Players!"));
+	static ItemStack enable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aFishSlap Enabled", Arrays.asList("&bYou Can Now Slap","&bYour Friends With the","&bFish in Your Inventory!", "&7PS: They Can Slap You Back!"));
+	static ItemStack disable_fish = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&4FishSlap Disabled", Arrays.asList("&cNo Fish-Slapping","&cFor You \u2639\u2639","&7PS: Others Can't Slap You!", "&7(Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
+	static ItemStack enable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aBlaster Enabled", Arrays.asList("&bYou Can Now Blast","&bYour Friends With the","&bBlazeRod in Your Inventory!", "&7PS: They Can Blast You Back!"));
+	static ItemStack disable_blaster = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&4Blaster Disabled", Arrays.asList("&cNo Blasting For","&cYou \u2639\u2639", "&7PS: Others Can't Blast You!", "&7(Accept Donors \u263A)")); //the two u are frowny faces, last one is smiley
+	static ItemStack players_unHidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aPlayers Seen", Arrays.asList("&aPlayers Are Currently Seen.","&bClick This To Hide", "&bAll Players!"));
+	static ItemStack players_hidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&4Players Hidden", Arrays.asList("&cPlayers Are Currently Hidden.","&bClick This To Show", "&bAll Players!"));
+	static ItemStack inventory_unhidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 5), "&aShow Inventory Items", Arrays.asList("&bShow All The Features", "&bAnd Hub Games In Your Hot-bar!", "&7Click This To Hide Items"));
+	static ItemStack inventory_hidden = Util.nameAndLore(new ItemStack(Material.WOOL, 1, (short) 14), "&4Hide Inventory Items", Arrays.asList("&bHide All The Features", "&bAnd Hub Games In Your Hot-bar!", "&7Click This To Show Items"));
 
-	public PlayerSettingsMenu(SettingsManager sm)
+	public PlayerSettingsMenu(HubHUD hhud)
 	{
-		settingsManager = sm;
+		main = hhud;
+		settingsManager = main.settingsManager;
 	}
 
 	public static void playerOpenSettingsMenu(Player p)
@@ -41,19 +46,24 @@ public class PlayerSettingsMenu implements Listener
 		Settings settings = settingsManager.getSettings(p);
 
 		if(settings.isSlapEnabled())
-			settingsMenu.setItem(11, enable_fish);
+			settingsMenu.setItem(10, enable_fish);
 		else
-			settingsMenu.setItem(11, disable_fish);
+			settingsMenu.setItem(10, disable_fish);
 
 		if(settings.isBlasterEnabled())
-			settingsMenu.setItem(13, enable_blaster);
+			settingsMenu.setItem(12, enable_blaster);
 		else
-			settingsMenu.setItem(13, disable_blaster);
+			settingsMenu.setItem(12, disable_blaster);
 
-		if(settings.isPlayersHidden())
-			settingsMenu.setItem(15, players_unHidden);
+		if(!settings.isPlayersHidden())
+			settingsMenu.setItem(14, players_unHidden);
 		else
-			settingsMenu.setItem(15, players_hidden);
+			settingsMenu.setItem(14, players_hidden);
+
+		if(!settings.isInventoryHidden())
+			settingsMenu.setItem(16, inventory_unhidden);
+		else
+			settingsMenu.setItem(16, inventory_hidden);
 
 		p.openInventory(settingsMenu);
 	}
@@ -105,7 +115,23 @@ public class PlayerSettingsMenu implements Listener
 					}
 
 				}
-				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Players Are Now: " + (settings.isPlayersHidden() ? ChatColor.GREEN + "Invisible!" : ChatColor.RED + "Visible!"));
+				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Players Are Now: " + (settings.isPlayersHidden() ? ChatColor.GREEN + "Hidden!" : ChatColor.RED + "Visible!"));
+			}
+			else if(itemName.contains("inventory"))
+			{
+				settings.toggleInventoryHidden();
+				if(settings.isInventoryHidden())
+				{
+					settingsMenu.setItem(16, inventory_unhidden);
+					player.getInventory().clear();
+					player.getInventory().setItem(8, Util.nameItem(new ItemStack(Material.NAME_TAG), "&0|&aShow Inventory Items&0|"));
+				}
+				else
+				{
+					settingsMenu.setItem(16, inventory_hidden);
+					main.inventoryManager.giveFullInventory(player);
+				}
+				player.sendMessage(ChatUtil.pvpitup + ChatColor.BLUE + "Inventory Now: " + (settings.isInventoryHidden() ? ChatColor.GREEN + "Hidden!" : ChatColor.RED + "Visible!"));
 			}
 
 			evt.setCancelled(true); // Cancel the event

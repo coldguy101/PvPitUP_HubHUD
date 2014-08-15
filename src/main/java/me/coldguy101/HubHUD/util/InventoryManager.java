@@ -26,13 +26,13 @@ public class InventoryManager
 	public void giveFullInventory(Player p)
 	{
 		PlayerInventory pi = p.getInventory();
+		pi.clear();
 
 		ItemStack fishSlap = new ItemStack(Material.RAW_FISH); //fish slapper
 		fishSlap.setDurability((short) 2); //Make it a clownfish
 		ItemMeta fishSlapMeta = fishSlap.getItemMeta();
 		fishSlapMeta.setDisplayName(Util.subColorCodes("&0|&aSlap Your Friends With A Fish!&0|"));
-		fishSlapMeta.setLore(Arrays.asList(ChatColor.AQUA + "Right Click While Holding", ChatColor.AQUA + "Me In Your " +
-				"Hand To", ChatColor.AQUA + "Slap Your Friends!"));
+		fishSlapMeta.setLore(Arrays.asList(ChatColor.AQUA + "Right Click While Holding", ChatColor.AQUA + "Me In Your " + "Hand To", ChatColor.AQUA + "Slap Your Friends!"));
 		fishSlap.setItemMeta(fishSlapMeta);
 		//fishSlap.addUnsafeEnchantment(Enchantment.LUCK, 1);
 		pi.setItem(0, fishSlap);
